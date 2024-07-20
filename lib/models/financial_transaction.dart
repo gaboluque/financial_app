@@ -10,6 +10,7 @@ class FinancialTransaction {
   final DateTime? performedAt;
   final String kind;
   final String notes;
+  final String category;
 
   FinancialTransaction({
     required this.id,
@@ -21,11 +22,21 @@ class FinancialTransaction {
     this.performedAt,
     required this.kind,
     required this.notes,
+    this.category = 'Other',
   });
 
   static const String INCOME = 'income';
   static const String EXPENSE = 'expense';
   static kinds() => [INCOME, EXPENSE];
+
+  static categories() => [
+        'Food',
+        'Transportation',
+        'Health',
+        'Entertainment',
+        'Education',
+        'Other',
+      ];
 
   get isIncome => kind == INCOME;
   get isExpense => kind == EXPENSE;
@@ -47,6 +58,7 @@ class FinancialTransaction {
             : null,
         kind: json['kind'],
         notes: json['notes'],
+        category: json['category'],
       );
 
   Map<String, dynamic> toMap() => {
@@ -59,5 +71,6 @@ class FinancialTransaction {
         'performedAt': performedAt?.toIso8601String(),
         'kind': kind,
         'notes': notes,
+        'category': category,
       };
 }

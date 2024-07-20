@@ -39,6 +39,8 @@ class TransactionList extends StatelessWidget {
                       color: transaction.isIncome ? Colors.green : Colors.red,
                     ),
                   ),
+                  Text(transaction.category,
+                      style: const TextStyle(fontSize: 12, color: Colors.grey)),
                   Text(TimeHelper.formatDateTime(transaction.transactionDate),
                       style: const TextStyle(fontSize: 12)),
                 ],
