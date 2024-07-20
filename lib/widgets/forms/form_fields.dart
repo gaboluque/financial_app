@@ -40,7 +40,6 @@ class FormFields {
       decoration: InputDecoration(labelText: label),
       validator: validator,
       keyboardType: TextInputType.number,
-      initialValue: value,
     );
   }
 

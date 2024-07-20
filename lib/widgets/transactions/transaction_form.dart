@@ -20,7 +20,7 @@ class TransactionForm extends StatefulWidget {
 class _TransactionFormState extends State<TransactionForm> {
   final _formKey = GlobalKey<FormState>();
   String _description = '';
-  double _amount = 0.0;
+  double _amount = 0;
   final DateTime _transactionDate = DateTime.now();
   bool _performed = false;
   String _kind = 'expense';
