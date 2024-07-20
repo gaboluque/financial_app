@@ -1,8 +1,10 @@
 import 'package:finance_app/controllers/financial_transaction_controller.dart';
+import 'package:finance_app/models/transaction_category.dart';
 import 'package:finance_app/utils/time_helper.dart';
 import 'package:finance_app/views/transaction_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sqflite/sqflite.dart';
 
 class TransactionList extends StatelessWidget {
   final String? accountId;
@@ -39,8 +41,9 @@ class TransactionList extends StatelessWidget {
                       color: transaction.isIncome ? Colors.green : Colors.red,
                     ),
                   ),
-                  Text(transaction.category,
-                      style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                  Icon(TransactionCategory.getIcon(transaction.category),
+                      color:
+                          TransactionCategory.getColor(transaction.category)),
                   Text(TimeHelper.formatDateTime(transaction.transactionDate),
                       style: const TextStyle(fontSize: 12)),
                 ],

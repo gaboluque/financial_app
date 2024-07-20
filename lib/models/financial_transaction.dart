@@ -1,3 +1,4 @@
+import 'package:finance_app/models/transaction_category.dart';
 import 'package:finance_app/utils/currency_helper.dart';
 
 class FinancialTransaction {
@@ -29,14 +30,7 @@ class FinancialTransaction {
   static const String EXPENSE = 'expense';
   static kinds() => [INCOME, EXPENSE];
 
-  static categories() => [
-        'Food',
-        'Transportation',
-        'Health',
-        'Entertainment',
-        'Education',
-        'Other',
-      ];
+  static categories() => TransactionCategory.categories;
 
   get isIncome => kind == INCOME;
   get isExpense => kind == EXPENSE;

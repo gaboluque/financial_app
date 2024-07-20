@@ -26,6 +26,7 @@ class _TransactionFormState extends State<TransactionForm> {
   String _kind = 'expense';
   String _notes = '';
   String _accountId = '';
+  String _category = 'Other';
 
   @override
   void initState() {
@@ -48,6 +49,7 @@ class _TransactionFormState extends State<TransactionForm> {
       _kind = transaction.kind;
       _notes = transaction.notes;
       _performed = transaction.performedAt != null;
+      _category = transaction.category;
     }
   }
 
@@ -64,6 +66,7 @@ class _TransactionFormState extends State<TransactionForm> {
         performedAt: _performed ? DateTime.now() : null,
         kind: _kind,
         notes: _notes,
+        category: _category,
       );
       await widget.onSave(transaction);
     }
@@ -111,6 +114,13 @@ class _TransactionFormState extends State<TransactionForm> {
             },
             items: FinancialTransaction.kinds(),
           ),
+          FormFields.dropDown(
+              value: _category,
+              onChanged: (newValue) {
+                _category = newValue!;
+              },
+              label: "Category",
+              items: FinancialTransaction.categories()),
           FormFields.textField(
             label: 'Notes',
             value: _notes,
