@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 class DropdownItemMap {
   final String value;
-  final String label;
+  final dynamic label;
 
   DropdownItemMap({required this.value, required this.label});
 }
@@ -64,7 +64,7 @@ class FormFields {
       itemList = itemMap.map<DropdownMenuItem<String>>((DropdownItemMap item) {
         return DropdownMenuItem(
           value: item.value,
-          child: Text(item.label),
+          child: item.label is String ? Text(item.label) : item.label as Widget,
         );
       }).toList();
     }

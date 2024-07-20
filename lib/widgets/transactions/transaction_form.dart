@@ -1,3 +1,4 @@
+import 'package:finance_app/models/transaction_category.dart';
 import 'package:finance_app/widgets/forms/form_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -120,7 +121,7 @@ class _TransactionFormState extends State<TransactionForm> {
                 _category = newValue!;
               },
               label: "Category",
-              items: FinancialTransaction.categories()),
+              itemMap: TransactionCategory.getDropdownItems()),
           FormFields.textField(
             label: 'Notes',
             value: _notes,

@@ -4,7 +4,6 @@ import 'package:finance_app/utils/time_helper.dart';
 import 'package:finance_app/views/transaction_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sqflite/sqflite.dart';
 
 class TransactionList extends StatelessWidget {
   final String? accountId;
