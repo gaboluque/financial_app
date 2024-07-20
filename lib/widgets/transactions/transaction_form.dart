@@ -1,3 +1,4 @@
+import 'package:finance_app/models/transaction_category.dart';
 import 'package:finance_app/widgets/forms/form_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -20,12 +21,13 @@ class TransactionForm extends StatefulWidget {
 class _TransactionFormState extends State<TransactionForm> {
   final _formKey = GlobalKey<FormState>();
   String _description = '';
-  double _amount = 0.0;
+  double _amount = 0;
   final DateTime _transactionDate = DateTime.now();
   bool _performed = false;
   String _kind = 'expense';
   String _notes = '';
   String _accountId = '';
+  String _category = 'Other';
 
   @override
   void initState() {
@@ -48,6 +50,7 @@ class _TransactionFormState extends State<TransactionForm> {
       _kind = transaction.kind;
       _notes = transaction.notes;
       _performed = transaction.performedAt != null;
+      _category = transaction.category;
     }
   }
 
@@ -64,6 +67,7 @@ class _TransactionFormState extends State<TransactionForm> {
         performedAt: _performed ? DateTime.now() : null,
         kind: _kind,
         notes: _notes,
+        category: _category,
       );
       await widget.onSave(transaction);
     }
@@ -111,6 +115,13 @@ class _TransactionFormState extends State<TransactionForm> {
             },
             items: FinancialTransaction.kinds(),
           ),
+          FormFields.dropDown(
+              value: _category,
+              onChanged: (newValue) {
+                _category = newValue!;
+              },
+              label: "Category",
+              itemMap: TransactionCategory.getDropdownItems()),
           FormFields.textField(
             label: 'Notes',
             value: _notes,

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 class DropdownItemMap {
   final String value;
-  final String label;
+  final dynamic label;
 
   DropdownItemMap({required this.value, required this.label});
 }
@@ -32,15 +32,15 @@ class FormFields {
     value,
   }) {
     return TextFormField(
-      onChanged: (value) => onChanged(value),
+      onChanged: (value) => onChanged(value.isEmpty ? '0' : value),
       inputFormatters: <TextInputFormatter>[
-        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-        FilteringTextInputFormatter.digitsOnly
+        // Numbers and dots only
+        FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}')),
       ],
       decoration: InputDecoration(labelText: label),
       validator: validator,
       keyboardType: TextInputType.number,
-      initialValue: value,
+      initialValue: value.isEmpty ? null : value,
     );
   }
 
@@ -64,7 +64,7 @@ class FormFields {
       itemList = itemMap.map<DropdownMenuItem<String>>((DropdownItemMap item) {
         return DropdownMenuItem(
           value: item.value,
-          child: Text(item.label),
+          child: item.label is String ? Text(item.label) : item.label as Widget,
         );
       }).toList();
     }

@@ -1,4 +1,5 @@
 import 'package:finance_app/controllers/financial_transaction_controller.dart';
+import 'package:finance_app/models/transaction_category.dart';
 import 'package:finance_app/utils/time_helper.dart';
 import 'package:finance_app/views/transaction_details_screen.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,9 @@ class TransactionList extends StatelessWidget {
                       color: transaction.isIncome ? Colors.green : Colors.red,
                     ),
                   ),
+                  Icon(TransactionCategory.getIcon(transaction.category),
+                      color:
+                          TransactionCategory.getColor(transaction.category)),
                   Text(TimeHelper.formatDateTime(transaction.transactionDate),
                       style: const TextStyle(fontSize: 12)),
                 ],
