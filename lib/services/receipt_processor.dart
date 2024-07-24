@@ -5,9 +5,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class ReceiptProcessor {
-  static const String _apiKey =
-      "Config.openAIAPIKey;";
-  static const String _apiUrl = "https://api.openai.com/v1/chat/completions";
+  static const String _apiKey = "";
+  static const String _apiUrl = "";
 
   final ImagePicker _imagePicker = ImagePicker();
 
