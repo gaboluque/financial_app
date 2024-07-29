@@ -2,6 +2,7 @@ import 'package:finance_app/controllers/financial_transaction_controller.dart';
 import 'package:finance_app/models/transaction_category.dart';
 import 'package:finance_app/utils/time_helper.dart';
 import 'package:finance_app/views/transaction_details_screen.dart';
+import 'package:finance_app/widgets/layout/empty_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +23,11 @@ class TransactionList extends StatelessWidget {
               .toList();
         } else {
           transactions = transactions.toList();
+        }
+
+        if (transactions.isEmpty) {
+          return const EmptyState(
+              message: "There are no transactions yet!", icon: Icons.savings);
         }
 
         return ListView.builder(

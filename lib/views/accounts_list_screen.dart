@@ -1,3 +1,4 @@
+import 'package:finance_app/widgets/layout/empty_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:finance_app/controllers/account_controller.dart';
@@ -9,10 +10,27 @@ class AccountsListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void addAccount() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const NewAccountScreen()),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(title: const Text('Accounts')),
       body: Consumer<AccountController>(
         builder: (context, accountController, child) {
+          if (accountController.accounts.isEmpty) {
+            return EmptyState(
+                message: "There are no accounts yet!",
+                icon: Icons.savings,
+                child: FilledButton.icon(
+                    icon: const Icon(Icons.add),
+                    onPressed: addAccount,
+                    label: const Text('Add Account')));
+          }
+
           return ListView.builder(
             itemCount: accountController.accounts.length + 1,
             itemBuilder: (context, index) {
@@ -23,13 +41,7 @@ class AccountsListScreen extends StatelessWidget {
                       style: TextStyle(color: Theme.of(context).primaryColor)),
                   leading:
                       Icon(Icons.add, color: Theme.of(context).primaryColor),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const NewAccountScreen()),
-                    );
-                  },
+                  onTap: addAccount,
                 );
               } else {
                 final account = accountController.accounts[index];
