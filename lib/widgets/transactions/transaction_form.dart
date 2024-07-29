@@ -181,9 +181,10 @@ class _TransactionFormState extends State<TransactionForm> {
           ),
           Column(
             children: [
-              ElevatedButton(
+              ElevatedButton.icon(
+                icon: const Icon(Icons.perm_media),
                 onPressed: _pickImage,
-                child: _isProcessing
+                label: _isProcessing
                     ? const Text('Processing Receipt...')
                     : const Text('Pick Receipt Image'),
               ),
