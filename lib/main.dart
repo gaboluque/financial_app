@@ -1,12 +1,16 @@
 import 'package:finance_app/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:finance_app/controllers/account_controller.dart';
 import 'package:finance_app/controllers/financial_transaction_controller.dart';
 import 'package:finance_app/views/accounts_list_screen.dart';
 import 'package:finance_app/views/transactions_list_screen.dart';
 
-void main() async {
+Future<void> main() async {
+  await dotenv.load();
+  // await dotenv.load(fileName: ".env.${const String.fromEnvironment('ENV', defaultValue: 'development')}");
+
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(MyApp());
