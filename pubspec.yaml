@@ -48,6 +48,7 @@ dependencies:
   flutter_form_builder: ^9.3.0
 
   path: any
+  flutter_dotenv: ^5.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

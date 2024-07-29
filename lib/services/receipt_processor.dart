@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:finance_app/config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class ReceiptProcessor {
-  static const String _apiKey = "";
-  static const String _apiUrl = "";
+  final String _apiKey = Config.openAIAPIKey;
+  final String _apiUrl = "https://api.openai.com/v1/chat/completions";
 
   final ImagePicker _imagePicker = ImagePicker();
 
