@@ -8,7 +8,7 @@ import 'package:finance_app/views/accounts_list_screen.dart';
 import 'package:finance_app/views/transactions_list_screen.dart';
 
 Future<void> main() async {
-  await dotenv.load(fileName: '.env');
+  await dotenv.load();
   // await dotenv.load(fileName: ".env.${const String.fromEnvironment('ENV', defaultValue: 'development')}");
 
   WidgetsFlutterBinding.ensureInitialized();
