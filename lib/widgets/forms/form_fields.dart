@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class DropdownItemMap {
   final String value;
@@ -9,47 +10,48 @@ class DropdownItemMap {
 }
 
 class FormFields {
-  static Widget textField({
-    required Function(String) onChanged,
-    required String label,
-    String? Function(String?)? validator,
-    TextInputType keyboardType = TextInputType.text,
-    value,
-  }) {
-    return TextFormField(
-      onChanged: (value) => onChanged(value),
+  static Widget textField(
+      {required String label,
+      required String name,
+      String? Function(String?)? validator,
+      TextInputType keyboardType = TextInputType.text,
+      initialValue}) {
+    return FormBuilderTextField(
+      key: Key(name),
+      name: name,
       decoration: InputDecoration(labelText: label),
       validator: validator,
       keyboardType: keyboardType,
-      initialValue: value,
+      initialValue: initialValue,
     );
   }
 
   static Widget numberField({
-    required Function(String) onChanged,
     required String label,
+    required String name,
     String? Function(String?)? validator,
-    value,
+    initialValue = '',
   }) {
-    return TextFormField(
-      onChanged: (value) => onChanged(value.isEmpty ? '0' : value),
+    return FormBuilderTextField(
+      key: Key(name),
+      name: name,
       inputFormatters: <TextInputFormatter>[
-        // Numbers and dots only
         FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}')),
       ],
       decoration: InputDecoration(labelText: label),
       validator: validator,
       keyboardType: TextInputType.number,
-      initialValue: value == null || value.isEmpty ? null : value,
+      initialValue: initialValue.isEmpty ? null : initialValue,
     );
   }
 
   static Widget dropDown({
-    required String value,
-    required Function(String?) onChanged,
     List<String>? items,
     List<DropdownItemMap>? itemMap,
     required String label,
+    required String name,
+    initialValue,
+    String? Function(String?)? validator,
   }) {
     // Items can be a list of strings or a list of DropdownItemMap
     List<DropdownMenuItem<String>>? itemList = [];
@@ -69,23 +71,43 @@ class FormFields {
       }).toList();
     }
 
-    return DropdownButtonFormField<String>(
-      value: value,
-      onChanged: onChanged,
+    return FormBuilderDropdown<String>(
+      key: Key(name),
+      name: name,
       items: itemList,
       decoration: InputDecoration(labelText: label),
+      initialValue: initialValue,
+      validator: validator,
     );
   }
 
   static Widget checkBox({
-    required bool value,
-    required Function(bool?) onChanged,
     required String label,
+    required String name,
+    initialValue = false,
   }) {
-    return CheckboxListTile(
+    return FormBuilderCheckbox(
+      key: Key(name),
+      name: name,
       title: Text(label),
-      value: value,
-      onChanged: onChanged,
+      initialValue: initialValue,
+    );
+  }
+
+  static Widget textArea({
+    required String label,
+    required String name,
+    String? Function(String?)? validator,
+    int? maxLines,
+    initialValue,
+  }) {
+    return FormBuilderTextField(
+      key: Key(name),
+      name: name,
+      decoration: InputDecoration(labelText: label),
+      validator: validator,
+      maxLines: maxLines,
+      initialValue: initialValue,
     );
   }
 }
