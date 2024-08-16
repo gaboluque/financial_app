@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:intl/intl.dart';
 
 class DropdownItemMap {
   final String value;
@@ -90,6 +91,23 @@ class FormFields {
       key: Key(name),
       name: name,
       title: Text(label),
+      initialValue: initialValue,
+    );
+  }
+
+  static Widget datePicker({
+    required String name,
+    required String label,
+    String? Function(DateTime?)? validator,
+    DateTime? initialValue,
+  }) {
+    return FormBuilderDateTimePicker(
+      key: Key(name),
+      name: name,
+      inputType: InputType.date,
+      format: DateFormat('yyyy-MM-dd'),
+      decoration: InputDecoration(labelText: label),
+      validator: validator,
       initialValue: initialValue,
     );
   }

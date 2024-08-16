@@ -1,6 +1,8 @@
 import 'package:finance_app/widgets/layout/alerts.dart';
+import 'package:finance_app/widgets/layout/snackbars.dart';
 import 'package:finance_app/widgets/transactions/transaction_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:finance_app/controllers/account_controller.dart';
 import 'package:finance_app/models/account.dart';
@@ -19,6 +21,12 @@ class _AccountDetailsScreenState extends State<AccountDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final accountController = AccountController.of(context);
+
+    copyToClipboard(String text) {
+      Clipboard.setData(new ClipboardData(text: text)).then((_) {
+        Snackbars.info(context, 'Copied to clipboard');
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -59,6 +67,14 @@ class _AccountDetailsScreenState extends State<AccountDetailsScreen> {
                             fontSize: 18, fontWeight: FontWeight.bold)),
                     const SizedBox(height: 10),
                     Text('Name: ${account.name}'),
+                    const SizedBox(height: 10),
+                    GestureDetector(
+                      onTap: () {
+                        copyToClipboard(account.accountNumber);
+                      },
+                      child: Text('Account Number: ${account.accountNumber}'),
+                    ),
+                    // TODO: Add share information
                     const SizedBox(height: 10),
                     Text('Current Balance: ${account.displayBalance}'),
                     const SizedBox(height: 20),
