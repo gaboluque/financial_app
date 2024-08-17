@@ -6,9 +6,8 @@ class FinancialTransaction {
   final String accountId;
   final String description;
   final double amount;
-  final DateTime transactionDate;
   final DateTime createdAt;
-  final DateTime? performedAt;
+  final DateTime performedAt;
   final String kind;
   final String notes;
   final String category;
@@ -18,9 +17,8 @@ class FinancialTransaction {
     required this.accountId,
     required this.description,
     required this.amount,
-    required this.transactionDate,
     required this.createdAt,
-    this.performedAt,
+    required this.performedAt,
     required this.kind,
     required this.notes,
     this.category = 'Other',
@@ -45,11 +43,8 @@ class FinancialTransaction {
         accountId: json['accountId'],
         description: json['description'],
         amount: json['amount'],
-        transactionDate: DateTime.parse(json['transactionDate']),
         createdAt: DateTime.parse(json['createdAt']),
-        performedAt: json['performedAt'] != null
-            ? DateTime.parse(json['performedAt'])
-            : null,
+        performedAt: DateTime.parse(json['performedAt']),
         kind: json['kind'],
         notes: json['notes'],
         category: json['category'],
@@ -60,9 +55,8 @@ class FinancialTransaction {
         'accountId': accountId,
         'description': description,
         'amount': amount,
-        'transactionDate': transactionDate.toIso8601String(),
         'createdAt': createdAt.toIso8601String(),
-        'performedAt': performedAt?.toIso8601String(),
+        'performedAt': performedAt.toIso8601String(),
         'kind': kind,
         'notes': notes,
         'category': category,

@@ -92,9 +92,8 @@ class _TransactionFormState extends State<TransactionForm> {
       accountId: formData['account'],
       description: formData['description'],
       amount: double.parse(formData['amount']),
-      transactionDate: widget.transaction?.transactionDate ?? DateTime.now(),
-      createdAt: DateTime.now(),
-      performedAt: formData['performed'] ? DateTime.now() : null,
+      createdAt: widget.transaction?.createdAt ?? DateTime.now(),
+      performedAt: formData['performedAt'] ?? DateTime.now(),
       kind: formData['kind'],
       notes: formData['notes'] ?? "",
       category: formData['category'],
@@ -160,10 +159,9 @@ class _TransactionFormState extends State<TransactionForm> {
               ),
               const SizedBox(height: 10),
               FormFields.datePicker(
-                name: 'transactionDate',
+                name: 'performedAt',
                 label: 'Transaction Date',
-                initialValue:
-                    widget.transaction?.transactionDate ?? DateTime.now(),
+                initialValue: widget.transaction?.performedAt ?? DateTime.now(),
               ),
               const SizedBox(height: 10),
               FormFields.textArea(

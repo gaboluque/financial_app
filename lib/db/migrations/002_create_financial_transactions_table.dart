@@ -10,7 +10,6 @@ class CreateFinancialTransactionsTable extends Migration {
       description TEXT,
       amount REAL,
       currencyCode TEXT,
-      transactionDate DATETIME,
       createdAt DATETIME,
       performedAt DATETIME,
       kind TEXT,

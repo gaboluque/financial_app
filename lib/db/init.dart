@@ -12,7 +12,7 @@ class DbInit {
     AddCategoriesToFinancialTransaction(),
   ];
 
-  final String _dbName = 'financial_tracker_dev.db';
+  final String _dbName = 'financial_tracker_.db';
 
   Future<Database> init() async {
     String path = join(await getDatabasesPath(), _dbName);
