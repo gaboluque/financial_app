@@ -49,7 +49,7 @@ class TransactionList extends StatelessWidget {
                   Icon(TransactionCategory.getIcon(transaction.category),
                       color:
                           TransactionCategory.getColor(transaction.category)),
-                  Text(TimeHelper.formatDateTime(transaction.transactionDate),
+                  Text(TimeHelper.formatDateTime(transaction.performedAt),
                       style: const TextStyle(fontSize: 12)),
                 ],
               ),

@@ -16,11 +16,11 @@ class TransactionForm extends StatefulWidget {
   final FinancialTransaction? transaction;
 
   const TransactionForm({
-    Key? key,
+    super.key,
     this.accountId,
     required this.onSave,
     this.transaction,
-  }) : super(key: key);
+  });
 
   @override
   _TransactionFormState createState() => _TransactionFormState();
@@ -32,25 +32,6 @@ class _TransactionFormState extends State<TransactionForm> {
 
   File? _receiptImage;
   bool _isProcessing = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _initializeForm();
-  }
-
-  void _initializeForm() {
-    if (widget.transaction != null) {
-      _formKey.currentState?.patchValue({
-        'description': widget.transaction!.description,
-        'amount': widget.transaction!.amount.toString(),
-        'kind': widget.transaction!.kind,
-        'notes': widget.transaction!.notes,
-        'performed': widget.transaction!.performedAt != null,
-        'category': widget.transaction!.category,
-      });
-    }
-  }
 
   Future<void> _pickImage() async {
     try {
@@ -111,11 +92,10 @@ class _TransactionFormState extends State<TransactionForm> {
       accountId: formData['account'],
       description: formData['description'],
       amount: double.parse(formData['amount']),
-      transactionDate: widget.transaction?.transactionDate ?? DateTime.now(),
-      createdAt: DateTime.now(),
-      performedAt: formData['performed'] ? DateTime.now() : null,
+      createdAt: widget.transaction?.createdAt ?? DateTime.now(),
+      performedAt: formData['performedAt'] ?? DateTime.now(),
       kind: formData['kind'],
-      notes: formData['notes'],
+      notes: formData['notes'] ?? "",
       category: formData['category'],
     );
     widget.onSave(transaction);
@@ -137,50 +117,63 @@ class _TransactionFormState extends State<TransactionForm> {
                   itemMap: accountController.accountDropdownItems,
                   validator: (value) {
                     if (value == null) return 'Please select an account';
-                    return '';
+                    return null;
                   });
             },
           ),
           Column(
             children: [
+              const SizedBox(height: 10),
               FormFields.textField(
                 name: 'description',
                 label: 'Description',
                 validator: (value) => value == null || value.isEmpty
                     ? 'Please enter a description'
                     : null,
+                initialValue: widget.transaction?.description,
               ),
+              const SizedBox(height: 10),
               FormFields.numberField(
                 name: 'amount',
                 label: 'Amount',
                 validator: (value) => value == null || value.isEmpty
                     ? 'Please enter an amount'
                     : null,
+                initialValue: widget.transaction?.amount.toString(),
               ),
+              const SizedBox(height: 10),
               FormFields.dropDown(
                 name: 'kind',
                 label: "Kind",
-                initialValue: FinancialTransaction.EXPENSE,
+                initialValue:
+                    widget.transaction?.kind ?? FinancialTransaction.EXPENSE,
                 items: FinancialTransaction.kinds(),
               ),
+              const SizedBox(height: 10),
               FormFields.dropDown(
                 name: 'category',
                 label: "Category",
-                initialValue: TransactionCategory.defaultCategory,
+                initialValue: widget.transaction?.category ??
+                    TransactionCategory.defaultCategory,
                 itemMap: TransactionCategory.getDropdownItems(),
               ),
+              const SizedBox(height: 10),
+              FormFields.datePicker(
+                name: 'performedAt',
+                label: 'Transaction Date',
+                initialValue: widget.transaction?.performedAt ?? DateTime.now(),
+              ),
+              const SizedBox(height: 10),
               FormFields.textArea(
                 name: 'notes',
                 label: 'Notes',
-              ),
-              FormFields.checkBox(
-                name: 'performed',
-                label: 'Performed',
+                initialValue: widget.transaction?.notes,
               ),
             ],
           ),
           Column(
             children: [
+              const SizedBox(height: 20),
               ElevatedButton.icon(
                 icon: const Icon(Icons.perm_media),
                 onPressed: _pickImage,

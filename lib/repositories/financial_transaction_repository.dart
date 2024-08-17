@@ -11,14 +11,10 @@ class FinancialTransactionRepository {
 
   Future<List<FinancialTransaction>> getTransactions() async {
     final db = await _databaseService.database;
-    final result = await db.query('financialTransactions');
+    final result =
+        await db.query('financialTransactions', orderBy: 'performedAt DESC');
     var transactions =
         result.map((json) => FinancialTransaction.fromMap(json)).toList();
-
-    // TODO: This should be done at a DB level
-    transactions.sort((itemA, itemB) {
-      return itemA.createdAt.isBefore(itemB.createdAt) ? 1 : 0;
-    });
 
     return transactions;
   }

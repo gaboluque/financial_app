@@ -1,10 +1,13 @@
 import 'package:finance_app/widgets/layout/alerts.dart';
+import 'package:finance_app/widgets/layout/snackbars.dart';
 import 'package:finance_app/widgets/transactions/transaction_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:finance_app/controllers/account_controller.dart';
 import 'package:finance_app/models/account.dart';
 import 'package:finance_app/views/new_transaction_screen.dart';
+import 'package:share_plus/share_plus.dart';
 
 class AccountDetailsScreen extends StatefulWidget {
   final Account account;
@@ -19,6 +22,19 @@ class _AccountDetailsScreenState extends State<AccountDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final accountController = AccountController.of(context);
+
+    copyToClipboard(String text) {
+      Clipboard.setData(ClipboardData(text: text)).then((_) {
+        Snackbars.info(context, 'Copied to clipboard');
+      });
+    }
+
+    shareAccountInfo(Account account) {
+      return () {
+        final accountDetails = "${account.accountNumber}\n${account.kind}";
+        Share.share(accountDetails);
+      };
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -54,11 +70,26 @@ class _AccountDetailsScreenState extends State<AccountDetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Account Details
-                    const Text('Account Details',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Account Details',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold)),
+                        IconButton(
+                            onPressed: shareAccountInfo(account),
+                            icon: const Icon(Icons.share))
+                      ],
+                    ),
                     const SizedBox(height: 10),
                     Text('Name: ${account.name}'),
+                    const SizedBox(height: 10),
+                    GestureDetector(
+                      onTap: () {
+                        copyToClipboard(account.accountNumber);
+                      },
+                      child: Text('Account Number: ${account.accountNumber}'),
+                    ),
                     const SizedBox(height: 10),
                     Text('Current Balance: ${account.displayBalance}'),
                     const SizedBox(height: 20),
@@ -75,7 +106,7 @@ class _AccountDetailsScreenState extends State<AccountDetailsScreen> {
                 const Text('Transactions',
                     style:
                         TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                FilledButton(
+                IconButton(
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -85,7 +116,7 @@ class _AccountDetailsScreenState extends State<AccountDetailsScreen> {
                       ),
                     );
                   },
-                  child: const Text('+'),
+                  icon: const Icon(Icons.add),
                 ),
               ],
             ),
