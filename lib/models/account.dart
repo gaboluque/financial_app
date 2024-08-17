@@ -17,7 +17,7 @@ class Account {
     required this.createdAt,
   });
 
-  static kinds() => ['Savings', 'Credit Card'];
+  static kinds() => ['Savings', 'Credit Card', 'Checking'];
 
   String get displayBalance {
     return CurrencyHelper.formatCurrency(currentBalance);

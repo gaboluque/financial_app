@@ -34,16 +34,16 @@ class FormFields {
     initialValue = '',
   }) {
     return FormBuilderTextField(
-      key: Key(name),
-      name: name,
-      inputFormatters: <TextInputFormatter>[
-        FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}')),
-      ],
-      decoration: InputDecoration(labelText: label),
-      validator: validator,
-      keyboardType: TextInputType.number,
-      initialValue: initialValue.isEmpty ? null : initialValue,
-    );
+        key: Key(name),
+        name: name,
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}')),
+        ],
+        decoration: InputDecoration(labelText: label),
+        validator: validator,
+        keyboardType: TextInputType.number,
+        initialValue:
+            initialValue == null || initialValue.isEmpty ? '' : initialValue);
   }
 
   static Widget dropDown({
